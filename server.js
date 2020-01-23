@@ -7,6 +7,9 @@ const server = express();
 server.use(express.json())
 server.use(helmet())
 server.use(logger)
+server.use(validateUserId)
+server.use(validateUser)
+server.use(validatePost)
 
 
 server.get('/', (req, res) => {
@@ -32,18 +35,31 @@ function logger(req, res, next) {
 //   - if the `id` parameter is valid, store that user object as `req.user`
 //   - if the `id` parameter does not match any user id in the database, cancel the request and respond with status `400` and `{ message: "invalid user id" }`
 
+function validateUserId(req, res, next){
+  console.log("validateUserID")
+  next()
+}
+
 // - `validateUser()`
 
 //   - `validateUser` validates the `body` on a request to create a new user
 //   - if the request `body` is missing, cancel the request and respond with status `400` and `{ message: "missing user data" }`
 //   - if the request `body` is missing the required `name` field, cancel the request and respond with status `400` and `{ message: "missing required name field" }`
 
+function validateUser(req, res, next){
+  console.log("validateUser")
+  next()
+}
+
 // - `validatePost()`
 //   - `validatePost` validates the `body` on a request to create a new post
 //   - if the request `body` is missing, cancel the request and respond with status `400` and `{ message: "missing post data" }`
 //   - if the request `body` is missing the required `text` field, cancel the request and respond with status `400` and `{ message: "missing required text field" }`
 
-
+function validatePost(req, res, next){
+  console.log("validatePost")
+  next()
+}
 
 
 module.exports = server;

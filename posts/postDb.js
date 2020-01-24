@@ -4,7 +4,7 @@ module.exports = {
   get,
   getById,
   insert,
-  update,
+  updatee,
   remove,
 };
 
@@ -26,7 +26,7 @@ function insert(post) {
     });
 }
 
-function update(id, changes) {
+function updatee(id, changes) {
   return db('posts')
     .where({ id })
     .update(changes);

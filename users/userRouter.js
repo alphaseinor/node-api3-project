@@ -3,7 +3,7 @@ const db = require('./userDb')
 
 const router = express.Router();
 
-router.post('/', validateUserId, validatePost, (req, res) => {
+router.post('/', validateUser, (req, res) => {
   db.insert(req.body)
     .then(user => {
       res.status(201).json(user)
@@ -98,18 +98,16 @@ function validateUserId(req, res, next){
 //   - if the request `body` is missing, cancel the request and respond with status `400` and `{ message: "missing user data" }`
 //   - if the request `body` is missing the required `name` field, cancel the request and respond with status `400` and `{ message: "missing required name field" }`
 
-function validateUser(req, res, next){
-  function validateUser(req, res, next) {
-    const body = req.body;
-  
-    if (Object.keys(body).length === 0) {
-      res.status(400).json({ message: "missing user data" });
-    } else if (!body.name) {
-      res.status(400).json({ message: "missing required name field" });
-    } else {
-      next();
-    }
+function validateUser(req, res, next) {
+  const body = req.body;
+
+  if (Object.keys(body).length === 0) {
+    res.status(400).json({ message: "missing user data" });
+  } else if (!body.name) {
+    res.status(400).json({ message: "missing required name field" });
   }
+  
+  next();
 }
 
 // - `validatePost()`
@@ -122,11 +120,10 @@ function validatePost(req, res, next){
 
   if (Object.keys(body).length === 0) {
     res.status(400).json({ message: "missing post data" });
-  } else if (!body.name) {
+  } else if (!body.text) {
     res.status(400).json({ message: "missing required text field" });
-  } else {
-    next();
   }
+  next();
 }
 
 module.exports = router;
